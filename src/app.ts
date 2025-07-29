@@ -15,6 +15,10 @@ app.get("/", (req, res) => {
   res.send("hello world");
 });
 
+app.post("/add-product", (req, res) => {});
+app.post("/edit-product", (req, res) => {});
+app.post("/delete-product", (req, res) => {});
+
 app.listen(port, () => {
   return console.log(`Express is listening at http://localhost:${port}`);
 });
