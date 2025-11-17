@@ -4,6 +4,12 @@ import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 
+import { MongoDbClient } from "./db/mongodbclient.js";
+import { Product } from "./types.js";
+import { ProductMetaData } from "./types.js";
+import { validateProduct } from "./validation/validateProduct.js";
+const client = MongoDbClient.getClient();
+
 const app = express();
 const port = process.env.port || 3000;
 
@@ -15,7 +21,32 @@ app.get("/", (req, res) => {
   res.send("hello world");
 });
 
-app.post("/add-product", (req, res) => {});
+app.post("/login", () => {});
+app.post("/verify-jwt", () => {});
+
+
+app.post("/add-product", async (req: Request<{}, {}, Product>, res) => {
+  try {
+    const product = req.body;
+    const isProductValid = validateProduct(product);
+    if (!isProductValid) {
+      throw new Error('invalid product')
+    }
+    const db = process.env.db;
+    const productCollection = process.env.product_collection || "";
+
+    const dbClient = await client;
+    const collection = dbClient.db(db).collection(productCollection);
+
+    await collection.insertOne({
+      ...product,
+    });
+    res.send({ success: true });
+  } catch (error) {
+    console.error("Error adding product:", error);
+    res.status(500).send({ error: "Failed to add product" });
+  }
+});
 app.post("/edit-product", (req, res) => {});
 app.post("/delete-product", (req, res) => {});
 
