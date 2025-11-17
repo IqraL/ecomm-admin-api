@@ -4,10 +4,10 @@ import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 
-import { MongoDbClient } from "./db/mongodbclient.js";
-import { Product } from "./types.js";
-import { ProductMetaData } from "./types.js";
-import { validateProduct } from "./validation/validateProduct.js";
+import { MongoDbClient } from "./db/mongodbclient";
+import { Product } from "./types";
+import { ProductMetaData } from "./types";
+import { validateProduct } from "./validation/validateProduct";
 const client = MongoDbClient.getClient();
 
 const app = express();

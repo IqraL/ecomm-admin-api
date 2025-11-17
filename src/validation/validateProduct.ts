@@ -1,4 +1,4 @@
-import { Product, ProductMetaData } from "../types.js";
+import { Product, ProductMetaData } from "../types";
 
 export const validateProduct = (product: Product) => {
   const { id, name, tag, description, coverImg, position, meta } = product;
